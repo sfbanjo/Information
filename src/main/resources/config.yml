@@ -1,0 +1,42 @@
+# Information Plugin Configuration
+
+settings:
+  permission-self: "information.self"
+  permission-others: "information.playerinfo"
+  admin-permission: "information.admin"
+
+messages:
+  no-permission: "&cYou do not have permission to execute this command!"
+  no-permission-other: "&cYou do not have permission to view other players' profiles!"
+  usage: "&eCorrect usage: /playerinfo [player_name]"
+  player-not-found: "&cThe player {player} has no recorded data on this server."
+  reload-success: "&aInformation plugin configuration reloaded successfully!"
+  reload-usage: "&eCorrect usage: /information reload"
+
+  info:
+    header: "&a--- Information about {player} ---"
+    status: "&fStatus: {status}"
+    status-online: "&aONLINE"
+    status-offline: "&cOFFLINE"
+    last-seen: "&fLast Seen: &e{date}"
+    uuid: "&fUUID: &7{uuid}"
+    ip: "&fIP Address: &4{ip}"
+    op-status: "&fOP Status: &e{op}"
+    banned-status: "&fBanned: &c{banned}"
+    first-join: "&fFirst Join: &e{date}"
+    playtime: "&fTotal Playtime: &a{playtime}"
+    world: "&fWorld: &e{world}"
+    dimension: "&fDimension: &b{dimension}"
+    position: "&fPosition: X={x} Y={y} Z={z}"
+    last-death: "&fLast Death: &c{death}"
+    spawn-location: "&fSpawn Location: &e{spawn}"
+    health: "&fHealth: &c{health}/20"
+    food: "&fFood: &6{food}/20"
+    xp-level: "&fXP Level: &b{level}"
+    ping: "&fPing: &d{ping} ms"
+    gamemode: "&fGameMode: &9{gamemode}"
+    mob-kills: "&fMob Kills: &a{mob_kills}"
+    deaths: "&fTotal Deaths: &c{deaths}"
+    pvp-wins: "&fPvP Wins: &e{pvp_wins}"
+    pvp-losses: "&fPvP Losses: &4{pvp_losses}"
+    effects: "&fActive Effects: &d{effects}"

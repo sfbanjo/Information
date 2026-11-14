@@ -1,0 +1,23 @@
+# Cartelle temporanee e di compilazione di Gradle
+.gradle/
+build/
+
+# File personali di IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Cartelle di test server locali (se ne creerai)
+run/
+
+# File di sistema Windows / Mac
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# File compilati (manteniamo però il wrapper di Gradle!)
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar

@@ -1,0 +1,9 @@
+name: Information
+version: 1.8-SNAPSHOT
+main: com.jarvis.test.Information
+api-version: '26.3'
+dependencies:
+  server:
+    PlaceholderAPI:
+      load: BEFORE
+      required: true

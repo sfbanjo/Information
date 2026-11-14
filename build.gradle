@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'io.papermc.paperweight.userdev' version '2.0.0-beta.24'
+}
+
+group = 'com.jarvis'
+version = '1.8-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+}
+
+dependencies {
+    paperweight.paperDevBundle('26.3.build.220-stable')
+    compileOnly 'me.clip:placeholderapi:2.12.3'
+}
+
+base {
+    archivesName = 'Information'
+}
