@@ -1,9 +1,29 @@
 # Information Plugin Configuration
+# A paper plugin to show player's information
 
 settings:
+  # Allow to execute command /playerinfo and show self statistics
   permission-self: "information.self"
+
+  # Allow admins to execute command /playerinfo on all players, online and offline
   permission-others: "information.playerinfo"
+
+  # Allow to execute the command /information reload
   admin-permission: "information.admin"
+
+  # Fields hidden when a player runs /playerinfo on themselves with ONLY information.self
+  # (Players with information.playerinfo or OP still see everything)
+  # Available keys: status, last-seen, uuid, ip, op-status, banned-status, first-join,
+  # playtime, world, dimension, position, last-death, spawn-location, health, food,
+  # xp-level, ping, gamemode, mob-kills, deaths, pvp-wins, pvp-losses, effects
+  self-hidden-fields:
+    - "status"
+    - "ip"
+    - "op-status"
+    - "banned-status"
+    - "world"
+    - "last-death"
+    - "spawn-location"
 
 messages:
   no-permission: "&cYou do not have permission to execute this command!"
@@ -40,3 +60,31 @@ messages:
     pvp-wins: "&fPvP Wins: &e{pvp_wins}"
     pvp-losses: "&fPvP Losses: &4{pvp_losses}"
     effects: "&fActive Effects: &d{effects}"
+
+# Available placeholders:
+#
+# %information_status%     ONLINE/OFFLINE status
+# %information_uuid%       UUID of player
+# %information_ip%         Last IP of player
+# %information_op%         Is player OP?
+# %information_banned%     Ban status
+# %information_first_join% First join date
+# %information_last_seen%  Last seen date/time
+# %information_playtime%   Total server playtime
+# %information_world%      Name of the world
+# %information_dimension%  Dimension
+# %information_x%          X
+# %information_y%          Y
+# %information_z%          Z
+# %information_last_death% Last death point
+# %information_spawn%      Spawn/bed position
+# %information_health%     Health
+# %information_food%       Hunger
+# %information_level%      XP level
+# %information_ping%       Latency ms
+# %information_gamemode%   Last/actual gamemode
+# %information_mob_kills%  Total mob kills
+# %information_deaths%     Total deaths
+# %information_pvp_wins%   PVP wins against player
+# %information_pvp_losses% PVP losses against player
+# %information_effects%    Potion effects

@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerEventListener implements Listener {
@@ -15,8 +16,13 @@ public class PlayerEventListener implements Listener {
     }
 
     @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        plugin.getPlayerDataManager().savePlayerAsync(event.getPlayer());
+    }
+
+    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        plugin.getPlayerDataManager().savePlayerDataAsync(event.getPlayer());
+        plugin.getPlayerDataManager().savePlayerAsync(event.getPlayer());
     }
 
     @EventHandler
@@ -25,9 +31,10 @@ public class PlayerEventListener implements Listener {
         Player killer = victim.getKiller();
 
         if (killer != null && !killer.equals(victim)) {
-            plugin.getPlayerDataManager().incrementPvpLosses(victim.getUniqueId());
+            plugin.getPlayerDataManager().recordPvpLossAndSaveAsync(victim);
+            plugin.getPlayerDataManager().savePlayerAsync(killer);
+        } else {
+            plugin.getPlayerDataManager().savePlayerAsync(victim);
         }
-
-        plugin.getPlayerDataManager().savePlayerDataAsync(victim);
     }
 }
