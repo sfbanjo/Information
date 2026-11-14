@@ -55,6 +55,7 @@ public class InformationPlaceholderExpansion extends PlaceholderExpansion {
             case "status" -> player.isOnline() ? "ONLINE" : "OFFLINE";
             case "uuid" -> snapshot.uuid().toString();
             case "ip" -> snapshot.ip();
+            case "previous_ip" -> snapshot.previousIp();
             case "op" -> snapshot.op() ? "Yes" : "No";
             case "banned" -> player.isBanned() ? "Yes" : "No";
             case "first_join" -> formatTimestamp(snapshot.firstPlayed());

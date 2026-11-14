@@ -23,6 +23,7 @@ Every field supports placeholders.
 | `%information_status%` | ONLINE/OFFLINE status |
 | `%information_uuid%` | UUID of player |
 | `%information_ip%` | Last IP of player |
+| `%information_previous_ip%` | Previous IP of player (if different) |
 | `%information_op%` | Is player OP? |
 | `%information_banned%` | Ban status |
 | `%information_first_join%` | First join date |

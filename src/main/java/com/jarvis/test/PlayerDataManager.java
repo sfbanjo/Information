@@ -48,6 +48,7 @@ public class PlayerDataManager {
                         uuid,
                         config.getString("name", "Unknown"),
                         config.getString("ip", "Unknown"),
+                        config.getString("previous-ip", "None"),
                         config.getBoolean("op", false),
                         config.getBoolean("banned", false),
                         config.getLong("first-played", 0L),
@@ -98,7 +99,7 @@ public class PlayerDataManager {
     public PlayerSnapshot captureOnlineSnapshot(Player player) {
         PlayerSnapshot existing = cache.get(player.getUniqueId());
         int pvpLosses = (existing != null) ? existing.pvpLosses() : 0;
-        PlayerSnapshot snapshot = PlayerSnapshot.fromPlayer(player, pvpLosses);
+        PlayerSnapshot snapshot = PlayerSnapshot.fromPlayer(player, existing, pvpLosses);
         putInCache(snapshot);
         return snapshot;
     }
@@ -140,7 +141,7 @@ public class PlayerDataManager {
     public void recordPvpLossAndSaveAsync(Player victim) {
         PlayerSnapshot existing = cache.get(victim.getUniqueId());
         int newLosses = ((existing != null) ? existing.pvpLosses() : 0) + 1;
-        PlayerSnapshot snapshot = PlayerSnapshot.fromPlayer(victim, newLosses);
+        PlayerSnapshot snapshot = PlayerSnapshot.fromPlayer(victim, existing, newLosses);
         putInCache(snapshot);
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> writeSnapshotToFile(snapshot));
     }
@@ -161,6 +162,7 @@ public class PlayerDataManager {
             config.set("name", snapshot.name());
             config.set("uuid", snapshot.uuid().toString());
             config.set("ip", snapshot.ip());
+            config.set("previous-ip", snapshot.previousIp());
             config.set("op", snapshot.op());
             config.set("banned", snapshot.banned());
             config.set("first-played", snapshot.firstPlayed());

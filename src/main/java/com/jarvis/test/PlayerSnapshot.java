@@ -15,6 +15,7 @@ public record PlayerSnapshot(
         UUID uuid,
         String name,
         String ip,
+        String previousIp,
         boolean op,
         boolean banned,
         long firstPlayed,
@@ -39,11 +40,24 @@ public record PlayerSnapshot(
         String effects
 ) {
 
-    public static PlayerSnapshot fromPlayer(Player player, int pvpLosses) {
+    public static PlayerSnapshot fromPlayer(Player player, PlayerSnapshot existing, int pvpLosses) {
         InetSocketAddress socketAddress = player.getAddress();
         String ipAddress = (socketAddress != null && socketAddress.getAddress() != null)
                 ? socketAddress.getAddress().getHostAddress()
                 : "Unknown";
+
+        String resolvedPreviousIp = "None";
+        if (existing != null) {
+            String lastSavedIp = existing.ip();
+            if (lastSavedIp != null
+                    && !lastSavedIp.equals("Unknown")
+                    && !ipAddress.equals("Unknown")
+                    && !lastSavedIp.equals(ipAddress)) {
+                resolvedPreviousIp = lastSavedIp;
+            } else if (existing.previousIp() != null) {
+                resolvedPreviousIp = existing.previousIp();
+            }
+        }
 
         Location loc = player.getLocation();
         String worldName = (loc.getWorld() != null) ? loc.getWorld().getName() : "Unknown";
@@ -70,6 +84,7 @@ public record PlayerSnapshot(
                 player.getUniqueId(),
                 player.getName(),
                 ipAddress,
+                resolvedPreviousIp,
                 player.isOp(),
                 player.isBanned(),
                 player.getFirstPlayed(),
@@ -93,6 +108,14 @@ public record PlayerSnapshot(
                 pvpLosses,
                 effectsStr
         );
+    }
+
+    public boolean hasDifferentPreviousIp() {
+        return previousIp != null
+                && !previousIp.isBlank()
+                && !previousIp.equals("None")
+                && !previousIp.equals("Unknown")
+                && !previousIp.equals(ip);
     }
 
     public String formattedPlaytime() {

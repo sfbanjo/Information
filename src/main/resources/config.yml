@@ -19,6 +19,7 @@ settings:
   self-hidden-fields:
     - "status"
     - "ip"
+    - "previous-ip"
     - "op-status"
     - "banned-status"
     - "world"
@@ -41,6 +42,7 @@ messages:
     last-seen: "&fLast Seen: &e{date}"
     uuid: "&fUUID: &7{uuid}"
     ip: "&fIP Address: &4{ip}"
+    previous-ip: "&fPrevious IP: &6{previous_ip}"
     op-status: "&fOP Status: &e{op}"
     banned-status: "&fBanned: &c{banned}"
     first-join: "&fFirst Join: &e{date}"
@@ -63,28 +65,29 @@ messages:
 
 # Available placeholders:
 #
-# %information_status%     ONLINE/OFFLINE status
-# %information_uuid%       UUID of player
-# %information_ip%         Last IP of player
-# %information_op%         Is player OP?
-# %information_banned%     Ban status
-# %information_first_join% First join date
-# %information_last_seen%  Last seen date/time
-# %information_playtime%   Total server playtime
-# %information_world%      Name of the world
-# %information_dimension%  Dimension
-# %information_x%          X
-# %information_y%          Y
-# %information_z%          Z
-# %information_last_death% Last death point
-# %information_spawn%      Spawn/bed position
-# %information_health%     Health
-# %information_food%       Hunger
-# %information_level%      XP level
-# %information_ping%       Latency ms
-# %information_gamemode%   Last/actual gamemode
-# %information_mob_kills%  Total mob kills
-# %information_deaths%     Total deaths
-# %information_pvp_wins%   PVP wins against player
-# %information_pvp_losses% PVP losses against player
-# %information_effects%    Potion effects
+# %information_status%       ONLINE/OFFLINE status
+# %information_uuid%         UUID of player
+# %information_ip%           Last IP of player
+# %information_previous_ip%  Previous IP of player (if different)
+# %information_op%           Is player OP?
+# %information_banned%       Ban status
+# %information_first_join%   First join date
+# %information_last_seen%    Last seen date/time
+# %information_playtime%     Total server playtime
+# %information_world%        Name of the world
+# %information_dimension%    Dimension
+# %information_x%            X
+# %information_y%            Y
+# %information_z%            Z
+# %information_last_death%   Last death point
+# %information_spawn%        Spawn/bed position
+# %information_health%       Health
+# %information_food%         Hunger
+# %information_level%        XP level
+# %information_ping%         Latency ms
+# %information_gamemode%     Last/actual gamemode
+# %information_mob_kills%    Total mob kills
+# %information_deaths%       Total deaths
+# %information_pvp_wins%     PVP wins against player
+# %information_pvp_losses%   PVP losses against player
+# %information_effects%      Potion effects

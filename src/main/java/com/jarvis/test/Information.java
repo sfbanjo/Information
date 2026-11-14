@@ -7,10 +7,15 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +37,7 @@ public final class Information extends JavaPlugin implements BasicCommand {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        updateConfig();
 
         this.playerDataManager = new PlayerDataManager(this);
         getServer().getPluginManager().registerEvents(new PlayerEventListener(this), this);
@@ -80,6 +86,40 @@ public final class Information extends JavaPlugin implements BasicCommand {
     public void onDisable() {
         if (playerDataManager != null) {
             playerDataManager.saveAllOnlineSync();
+        }
+    }
+
+    private void updateConfig() {
+        InputStream defaultStream = getResource("config.yml");
+        if (defaultStream == null) {
+            return;
+        }
+
+        try (InputStreamReader reader = new InputStreamReader(defaultStream, StandardCharsets.UTF_8)) {
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(reader);
+            FileConfiguration currentConfig = getConfig();
+            boolean changed = false;
+
+            for (String path : defaultConfig.getKeys(true)) {
+                if (!currentConfig.contains(path, true)) {
+                    if (defaultConfig.isConfigurationSection(path)) {
+                        currentConfig.createSection(path);
+                    } else {
+                        currentConfig.set(path, defaultConfig.get(path));
+                    }
+                    currentConfig.setComments(path, defaultConfig.getComments(path));
+                    currentConfig.setInlineComments(path, defaultConfig.getInlineComments(path));
+                    changed = true;
+                }
+            }
+
+            if (changed) {
+                saveConfig();
+                reloadConfig();
+                getLogger().info("config.yml aggiornato automaticamente con le nuove opzioni!");
+            }
+        } catch (Exception e) {
+            getLogger().warning("Impossibile aggiornare automaticamente config.yml: " + e.getMessage());
         }
     }
 
@@ -158,6 +198,10 @@ public final class Information extends JavaPlugin implements BasicCommand {
         }
         sendInfoLine(sender, hiddenFields, "uuid", "&fUUID: &7{uuid}", "{uuid}", snapshot.uuid().toString());
         sendInfoLine(sender, hiddenFields, "ip", "&fIP Address: &4{ip}", "{ip}", snapshot.ip());
+        if (!hiddenFields.contains("ip") && snapshot.hasDifferentPreviousIp()) {
+            sendInfoLine(sender, hiddenFields, "previous-ip", "&fPrevious IP: &6{previous_ip}", "{previous_ip}", snapshot.previousIp());
+        }
+        sendInfoLine(sender, hiddenFields, "op-status", "&fOP Status: &e{op}", "{op}", snapshot.op() ? "Yes" : "No");
         sendInfoLine(sender, hiddenFields, "op-status", "&fOP Status: &e{op}", "{op}", snapshot.op() ? "Yes" : "No");
         sendInfoLine(sender, hiddenFields, "banned-status", "&fBanned: &c{banned}", "{banned}", isBanned ? "Yes" : "No");
         sendInfoLine(sender, hiddenFields, "first-join", "&fFirst Join: &e{date}", "{date}", formatTimestamp(snapshot.firstPlayed()));
