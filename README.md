@@ -2,7 +2,7 @@
 a Paper plugin to show player's information
 
 This is the first public release of my Information plugin.
-It is a Paper/Purpur plugin for version 26.3 that displays main player information.
+It is a Paper/Purpur plugin that displays main player information.
 It is permission-based: players with permission can check their own information, while admins can view information for any player (online or offline) who has joined the server.
 Every field supports placeholders.
 ### Dependency: PlaceholderAPI
